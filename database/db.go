@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
@@ -18,7 +19,9 @@ type Account struct {
 
 func ConnectDatabase() (*sql.DB, error) {
 	fmt.Println("Truy xuất thông tin đăng nhập")
-	dsn := "TIK:123@tcp(127.0.0.1:3306)/login"
+	DB_username := os.Getenv("DB_USERNAME")
+	DB_userpassword := os.Getenv("DB_USERPASSWORD")
+	dsn := DB_username + ":" + DB_userpassword + "@tcp(127.0.0.1:3306)/login"
 	fmt.Println("Truy xuất vào database")
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
