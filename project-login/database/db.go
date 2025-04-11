@@ -3,13 +3,11 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"github.com/go-sql-driver/mysql"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/go-sql-driver/mysql"
-	_ "github.com/go-sql-driver/mysql"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type Account struct {
@@ -58,7 +56,7 @@ func SubmitLoginHandler(w http.ResponseWriter, r *http.Request, path string) {
 			http.Error(w, fmt.Sprintf("Error Parse Form: %v", err), http.StatusInternalServerError)
 			return
 		}
-		submitData.UserName = string(r.PostFormValue("account"))
+		submitData.UserName = r.PostFormValue("account")
 		submitData.PassWord = r.PostFormValue("passw")
 		checkLogin(w, submitData.UserName, submitData.PassWord)
 	case http.MethodGet:
@@ -148,12 +146,6 @@ func checkLogin(w http.ResponseWriter, sumittedUsername string, sumittedUserPass
 		return false, err
 	}
 	const Select = "SELECT username, password_hash FROM users WHERE username=?"
-	//user_password_hash, err := bcrypt.GenerateFromPassword([]byte(sumittedUserPassword), bcrypt.DefaultCost)
-	//	if err != nil {
-	//		fmt.Println("Error system for hashing password user")
-	//		return false, err
-	//	}
-	//	sumittedUserPassword = string(user_password_hash)
 	err = db.QueryRow(Select, sumittedUsername).Scan(&usr.UserName, &usr.PassWord)
 	fmt.Println("Sau khi truy cap vao database!")
 	// Scan use pointer
@@ -177,5 +169,4 @@ func checkLogin(w http.ResponseWriter, sumittedUsername string, sumittedUserPass
 	fmt.Fprintf(w, "<p>Dữ liệu bạn gửi: %s</p>", sumittedUsername)
 	fmt.Fprintf(w, "<a href='/'>Quay lại trang chủ</a>")
 	return true, nil
-
 }
