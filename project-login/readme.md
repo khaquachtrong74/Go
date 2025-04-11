@@ -5,6 +5,4 @@
 3. Deploy it with net/http of go
 
 # PURPOSE
-1. Mastery backend
-
-# 
+1. Learn how to organized 
