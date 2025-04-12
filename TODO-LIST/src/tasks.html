@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Todo List</title>
+    </head>
+<body>
+    <div style="background-color: white;color:black">
+        <form action="/add-task" method="POST">
+            <h1>Add your task here</h1>
+            <label for="post-task">Task</label>
+            <input type="text" name="task">
+            <label for="post-task">State</label>
+            <input type="text" name="state">
+            <button type="submit">Click me!</button>
+        </form>
+    </div>
+    <h1>Công việc của tôi</h1>
+
+    <ul>
+        {{range .}}
+            <li>{{.}}</li>
+        {{else}}
+            <li>Tuyệt vời, chúng ta đã hoàn thành việc hôm nay rồi! (Hoặc không có việc gì :u )</li>
+        {{end}}
+    </ul>
+    
+    </body>
+</html>
