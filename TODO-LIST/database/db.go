@@ -33,13 +33,12 @@ func ConnectDatabase() (*sql.DB, error) {
 	C.Result("Ping")
 	return db, nil
 }
-func GetData() ([]string, error) {
+func GetData(query string) ([]string, error) {
 	db, err := ConnectDatabase()
 	if err != nil {
 		C.Failed("GET TASKS")
 		return nil, err
 	}
-	query := "SELECT task, state FROM tasks"
 	rows, err := db.Query(query)
 	if err != nil {
 		C.Failed("Querying")
@@ -57,6 +56,23 @@ func GetData() ([]string, error) {
 	}
 	return tasks, err
 }
+func GetOneRowData(query string, id int) (string, error) {
+	db, err := ConnectDatabase()
+	if err != nil {
+		C.Failed("GET TASKS")
+		return "", err
+	}
+	var task string
+	var state string
+	fmt.Println(query)
+	fmt.Println(id)
+	err = db.QueryRow(query, id).Scan(&task, &state)
+	if err != nil {
+		C.Failed("Querying")
+		return "", err
+	}
+	return task + " : " + state, err
+}
 func InsertData(data *C.ToDo, db *sql.DB) {
 	fmt.Println("Xử lý Update data/Chèn")
 	if data.TASK == "" {
@@ -64,12 +80,7 @@ func InsertData(data *C.ToDo, db *sql.DB) {
 		return
 	}
 	var insertQuery string
-	if data.STATE == "" {
-		insertQuery = "INSERT INTO tasks(task) VALUES(?)"
-		db.Exec(insertQuery, data.TASK)
-	} else {
-		insertQuery = "INSERT INTO tasks(task, state) VALUES(?,?)"
-		db.Exec(insertQuery, data.TASK, data.STATE)
-	}
+	insertQuery = "INSERT INTO tasks(task) VALUES(?)"
+	db.Exec(insertQuery, data.TASK)
 	fmt.Println("Hoàn thành xử lý chèn ")
 }
