@@ -37,8 +37,7 @@ func HandleGetTask(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Invalid Task ID", http.StatusBadRequest)
 		C.Failed("Convert int to string!")
-		return
-	}
+		return }
 
 	task, err := store.GetOneRowData("SELECT task, state FROM tasks WHERE id=?", taskIDInt)
 	if err != nil {

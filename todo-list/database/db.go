@@ -6,8 +6,6 @@ import (
 	"os"
 	C "project/todo-list/config"
 	"time"
-
-	//"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 )
 
