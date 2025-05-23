@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 	"github.com/dreamsofcode-io/nethttp/monster"
+	"github.com/khaquachtrong74/simple-api/net-http/middleware"
 )
 
 func main(){

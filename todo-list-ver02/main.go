@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 	"github.com/gin-gonic/gin"
+	"github.com/khaquachtrong74/simple-api/net-http/middleware"
 )
 type myForm struct{
 	Task string `form:"task"`
@@ -13,9 +14,6 @@ type myForm struct{
 func formHandler(c *gin.Context){
 	var fakeForm myForm
 	fakeForm.Task = c.PostForm("task")
-	c.BindJson(
-		gin.JSON(http.StatusOK, gin.H{"task":fakeForm.Task,}),
-)
 }
 func main(){
 //Custom HTTP Configuration
