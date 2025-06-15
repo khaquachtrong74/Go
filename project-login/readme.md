@@ -6,3 +6,6 @@
 
 # PURPOSE
 1. Learn how to organized 
+# Need
+Database mysql
+

@@ -28,12 +28,12 @@ func main() {
     info.CPU = cpuStat[0].ModelName
     info.RAM = vmStat.Total / 1024 / 1024
     info.Disk = diskStat.Total / 1024 / 1024
-    fmt.Printf("%+v\n", info)
+
+		fmt.Println("Hostname: ",info.Hostname)
 		fmt.Println("Platform: ",hostStat.Platform, hostStat.PlatformVersion)
 		fmt.Println("CPU: ", cpuStat[0].ModelName)
-		fmt.Println(mem.SwapDevices())
-		fmt.Println(diskStat)
-
+		fmt.Println("RAM: ", info.RAM, " MB")
+		fmt.Println("Disk: ", info.Disk," MB")
 }
 
 

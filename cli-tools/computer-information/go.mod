@@ -1,4 +1,4 @@
-module get-cf
+module get-computer-information
 
 go 1.24.3
 
